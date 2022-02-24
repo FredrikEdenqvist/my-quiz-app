@@ -16,8 +16,10 @@ export const QuestionHandler = ({question, onClick, userAnswer}: Props) => {
             <div className={styles.answerContainer}>
             {question.answers.map((x, i) => (
                 <button 
+                key={x.index}
                 disabled={userAnswer !== undefined} 
-                className={clsx([styles.answer, 
+                className={clsx([
+                    styles.answer, 
                     userAnswer?.index === i && styles.selectedAnswer, 
                     userAnswer !== undefined && x.isCorrectAnswer && styles.correctAnswer,
                     userAnswer !== undefined && !x.isCorrectAnswer && styles.wrongAnswer])} 
