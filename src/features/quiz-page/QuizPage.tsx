@@ -1,29 +1,31 @@
 import { useState } from "react";
 import { Button } from "../../common/components/Button";
+import { useQuizContext } from "../../common/context/QuizContext";
 import { Answer, Question } from "../../common/requests/quizRequest";
 import { QuestionHandler } from "./QuestionHandler";
 
 interface Props {
-    questions: Question[];
+
 }
 interface UserAnswer {
     questionText: string;
     answer: Answer;
 }
-export const QuizPage = ({questions}: Props) => {
+export const QuizPage = () => {
     const [answers, setAnswers] = useState<UserAnswer[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const onAnswer = (answer: Answer) => {
-        setAnswers([...answers, { questionText: questions[0].question, answer}]);
+        setAnswers([...answers, { questionText: quizQuestions[0].question, answer}]);
     };
+    const {quizQuestions} = useQuizContext();
 
     const moveToNextQuestion = () => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
-      };
+    };
 
     return (<div>
                 <QuestionHandler 
-                    question={questions[currentQuestionIndex]} 
+                    question={quizQuestions[currentQuestionIndex]} 
                     onClick={onAnswer} 
                     userAnswer={answers[currentQuestionIndex]?.answer} />
                     <Button
